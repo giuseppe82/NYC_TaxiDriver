@@ -315,7 +315,7 @@ ax.tick_params(labelsize=12)
 ```
 
 
-![png](output_21_0.png)
+![png](TaxiDriver_files/TaxiDriver_21_0.png)
 
 
 We can see that **credit card and cash** are the taxi's main payment types. The rows with the other strange values can be  deleted. By doing this (we are going to do the same with the other attributes too) we are adding a bit of bias to the predictions, but those values are so unusual that will hardly affect to the prediction's performance.  
@@ -566,7 +566,7 @@ ax.tick_params(labelsize=12)
 ```
 
 
-![png](output_36_0.png)
+![png](TaxiDriver_files/TaxiDriver_36_0.png)
 
 
 A possible explanation is that it's very possible drivers are under-reporting cash tips, in order to pocket all of the cash themselves, which obviously skews our data quite a bit. So, we remove this annoying noise, deleting the `CSH payment type`. Moreover, it seems reasonable to assume an upper limit of a value of `$100.00`. Also, we drop unnecessary columns: 
@@ -991,7 +991,7 @@ subtotal = None
 ```
 
 
-![png](output_54_0.png)
+![png](TaxiDriver_files/TaxiDriver_54_0.png)
 
 
 Continuing with the attributes, it's the turn of the coordinates, longitude and latitude for pickups and dropoffs. By observing the above dataframe, we notice coordinates that don't even exist! For fix that, we can use only the coordinates satisfying the conditions in the following table:
@@ -1196,11 +1196,11 @@ plt.show()
 ```
 
 
-![png](output_65_0.png)
+![png](TaxiDriver_files/TaxiDriver_65_0.png)
 
 
 
-![png](output_65_1.png)
+![png](TaxiDriver_files/TaxiDriver_65_1.png)
 
 
 We see that the vast majority of trips are clustered in **Manhattan** and in two smaller spots outside the immediate vacinity of the city. Searching for the values of those latitudes and longitudes in Google Maps led us to discover that those smaller spots are reflective of the **Laguardia** and **JFK Airports**. As it turns out, `$52` is the flat rate for a trip from Manhattan to JFK Airport, explaining the spike in fare amount noted in the histogram below.
@@ -1224,7 +1224,7 @@ plt.title('Fare Amount')
 
 
 
-![png](output_67_1.png)
+![png](TaxiDriver_files/TaxiDriver_67_1.png)
 
 
 We looked at tip as a percentage of the total cost of a trip, as clearly longer trips with higher fares will be correlated with higher tips.
@@ -1258,7 +1258,7 @@ plt.show()
 ```
 
 
-![png](output_71_0.png)
+![png](TaxiDriver_files/TaxiDriver_71_0.png)
 
 
 This is now a much more reasonable histogram of tip percentage - the mode is clearly at 20%, with smaller peaks around 25%, 30%, 10% and 15%, all of which are preselected tips that can be chosen on the screen in the back of the taxi cab. The spike at 0% remains, but it is much more reasonable that in the original data set. Thus we began to look at other trends in the tip data before continuing to build a prediction based on this data.
@@ -1306,11 +1306,11 @@ plt.show()
 ```
 
 
-![png](output_75_0.png)
+![png](TaxiDriver_files/TaxiDriver_75_0.png)
 
 
 
-![png](output_75_1.png)
+![png](TaxiDriver_files/TaxiDriver_75_1.png)
 
 
 Clearly, there are no strong time-dependent trends in tip percentage - the average tip percentage remains fairly consistent over the course of the day, week. The variance of tip percentage is smallest in the early afternoon and reaches a peak around 4:00 AM/PM.  Now switching our focus from temporal to geographic trends, we looked at average tip percentage by pickup and dropoff neighborhood.
@@ -1361,7 +1361,7 @@ plt.show()
 
 
 
-![png](output_77_1.png)
+![png](TaxiDriver_files/TaxiDriver_77_1.png)
 
 
 
@@ -1369,7 +1369,7 @@ plt.show()
 
 
 
-![png](output_77_3.png)
+![png](TaxiDriver_files/TaxiDriver_77_3.png)
 
 
 Again, there do not seem to be any particularly significant trends, though there is certianly some variance - average tip percentage by region is more or less the same, though passengers travelling to and from Washington Heights and (East) Harlem tip considerably less than average.
@@ -1389,7 +1389,7 @@ plt.show()
 ```
 
 
-![png](output_79_0.png)
+![png](TaxiDriver_files/TaxiDriver_79_0.png)
 
 
 Interestingly, as the cost of the trip increases, the tip percentage decreases fairly drastically, though we again see a consistent concentration of tip percentages around 20%, 25%, and 30% independent of trip cost. Thus as the cost of a trip increases, people become less willing to pay a high tip percentage.
@@ -1470,7 +1470,7 @@ plt.show()
 df['tip_class'] = [0 if a < 0.1 else 1 for a in df['percent_tip']]
 
 # create a set of predictor variables and the tip percentages to predict
-predictors = card[['trip_distance','trip_time_in_mins','speed','time',\
+predictors = df[['trip_distance','trip_time_in_mins','speed','time',\
                    'weekday','passenger_count','fare_amount',\
                    'pickup_latitude','pickup_longitude','dropoff_latitude',\
                    'dropoff_longitude']]
@@ -1522,7 +1522,7 @@ print('The Random Forest Classifier is ' + str(performance*100.0) \
       + '% accurate in predicting tip class with ' + str(optimal_trees) + ' trees.')
 ```
 
-** Waiting for a result, hopefully a very good accuracy in predicting wheter a tipp will be *good* or *bad***
+**Waiting for a result, hopefully a very good accuracy in predicting wheter a tipp will be good or bad**
 
 # Conclusions
 
